@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">LED Matrix</string>
+    <string name="open_button">Open</string>
+    <string name="photo_content_description">Your photo</string>
+</resources>
