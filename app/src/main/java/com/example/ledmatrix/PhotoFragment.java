@@ -27,8 +27,8 @@ public class PhotoFragment extends Fragment {
         photoImageView = rootView.findViewById(R.id.photo_image_view);
 
         // start ACTION_PICK intent on pick button click
-        Button openButton = rootView.findViewById(R.id.open_button);
-        openButton.setOnClickListener(view -> {
+        Button browseButton = rootView.findViewById(R.id.browse_button);
+        browseButton.setOnClickListener(view -> {
             Intent pickIntent = new Intent(Intent.ACTION_PICK);
 
             // filter jpeg, png, gif, etc.
