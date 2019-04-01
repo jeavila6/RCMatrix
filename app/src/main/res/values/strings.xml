@@ -3,4 +3,7 @@
     <string name="photo_content_description">Your photo</string>
     <string name="browse_button">Browse</string>
     <string name="camera_button">Camera</string>
+    <string name="title_photo">Photo</string>
+    <string name="title_draw">Draw</string>
+    <string name="title_text">Text</string>
 </resources>

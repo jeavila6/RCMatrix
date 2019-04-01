@@ -6,6 +6,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/colorPrimaryDark</item>
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
     </style>
 
     <!-- action bar theme -->
@@ -13,16 +14,17 @@
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
-    <!-- tab layout theme -->
-    <style name="TabLayoutTheme" parent="@style/Widget.Design.TabLayout">
-        <item name="tabBackground">@color/colorPrimary</item>
-        <item name="tabIndicatorColor">@android:color/white</item>
-    </style>
-
     <!-- button theme -->
     <style name="ButtonTheme" parent="@style/Widget.AppCompat.Button.Colored">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:drawablePadding">4dp</item>
+    </style>
+
+    <!-- bottom navigation view theme -->
+    <style name="BottomNavigationViewTheme" parent="Widget.Design.BottomNavigationView">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="itemTextColor">@color/bottom_navigation</item>
+        <item name="itemIconTint">@color/bottom_navigation</item>
     </style>
 
 </resources>
