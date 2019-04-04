@@ -3,28 +3,29 @@
     <!-- base application theme -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/colorPrimaryDark</item>
-        <item name="android:navigationBarColor">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
     </style>
 
-    <!-- action bar theme -->
-    <style name="ActionBarTheme" parent="@style/Widget.AppCompat.ActionBar">
-        <item name="android:background">@color/colorPrimary</item>
+    <!-- action bar style -->
+    <style name="ActionBarStyle" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:background">@drawable/bottom_border_background</item>
     </style>
 
     <!-- button theme -->
-    <style name="ButtonTheme" parent="@style/Widget.AppCompat.Button.Colored">
+    <style name="ButtonTheme" parent="Widget.AppCompat.Button.Colored">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:drawablePadding">4dp</item>
     </style>
 
-    <!-- bottom navigation view theme -->
-    <style name="BottomNavigationViewTheme" parent="Widget.Design.BottomNavigationView">
-        <item name="android:background">@color/colorPrimary</item>
+    <!-- bottom navigation view style -->
+    <style name="BottomNavigationViewStyle" parent="Widget.Design.BottomNavigationView">
+        <item name="android:background">@drawable/top_border_background</item>
         <item name="itemTextColor">@color/bottom_navigation</item>
         <item name="itemIconTint">@color/bottom_navigation</item>
+        <item name="labelVisibilityMode">unlabeled</item>
     </style>
 
 </resources>

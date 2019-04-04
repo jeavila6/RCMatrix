@@ -6,4 +6,6 @@
     <string name="title_photo">Photo</string>
     <string name="title_draw">Draw</string>
     <string name="title_text">Text</string>
+    <string name="title_audio">Audio</string>
+    <string name="connect_item">Connect</string>
 </resources>
