@@ -50,6 +50,8 @@ public class PhotoFragment extends Fragment {
         switch(requestCode) {
             case REQ_CODE_PICK:
                 Uri selectedImage = data.getData();
+
+                // display selected photo in image view
                 photoImageView.setImageURI(selectedImage);
         }
     }
