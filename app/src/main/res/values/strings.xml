@@ -2,6 +2,7 @@
     <string name="app_name">LED Matrix Controller</string>
     <string name="browse_button">Browse</string>
     <string name="camera_button">Camera</string>
+    <string name="color_label">Color</string>
     <string name="photo_content_description">Selected photo</string>
     <string name="text_label">Text</string>
     <string name="title_audio">Audio</string>

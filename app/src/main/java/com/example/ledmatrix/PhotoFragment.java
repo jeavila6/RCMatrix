@@ -1,6 +1,8 @@
 package com.example.ledmatrix;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,13 +20,13 @@ public class PhotoFragment extends Fragment {
     // request codes for starting activities
     private final int REQ_CODE_PICK = 0;
 
-    ImageView photoImageView;
+    ImageView mPhotoImageView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_photo, container, false);
 
-        photoImageView = rootView.findViewById(R.id.photo_image_view);
+        mPhotoImageView = rootView.findViewById(R.id.photo_image_view);
 
         // start ACTION_PICK intent on pick button click
         Button browseButton = rootView.findViewById(R.id.browse_button);
@@ -52,7 +54,17 @@ public class PhotoFragment extends Fragment {
                 Uri selectedImage = data.getData();
 
                 // display selected photo in image view
-                photoImageView.setImageURI(selectedImage);
+                mPhotoImageView.setImageURI(selectedImage);
         }
+    }
+
+    public byte[] getMessage() {
+
+        // get image from image view
+        Bitmap bitmap = ((BitmapDrawable) mPhotoImageView.getDrawable()).getBitmap();
+
+        // resize and return RGB values for pixels
+        bitmap = ImageTools.resizeBitmap(bitmap, 64, 64);
+        return ImageTools.bitmapToRgb(bitmap);
     }
 }

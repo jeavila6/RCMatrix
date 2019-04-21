@@ -1,29 +1,8 @@
 package com.example.ledmatrix;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.provider.MediaStore;
-
-import java.io.IOException;
 
 class ImageTools {
-
-    /**
-     * Return Bitmap from URI.
-     * @param context application environment
-     * @param uri source URI
-     * @return result Bitmap
-     */
-    static Bitmap uriToBitmap(Context context, Uri uri) {
-        Bitmap bitmap = null;
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return bitmap;
-    }
 
     /**
      * Return resized Bitmap from Bitmap.
@@ -41,17 +20,24 @@ class ImageTools {
      * @param bitmap source Bitmap
      * @return RGB String
      */
-    static String bitmapToRgb(Bitmap bitmap) {
-        int[] pixels = new int[bitmap.getWidth() * bitmap.getHeight()];
+    static byte[] bitmapToRgb(Bitmap bitmap) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+
+        int[] pixels = new int[width * height];
         bitmap.getPixels(pixels, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
-        StringBuilder builder = new StringBuilder();
+
+        // RGB values for each pixel, in order
+        byte[] bytes = new byte[width * height * 3];
+
+        int index = 0;
         for (int pixel : pixels) {
-            int r = (pixel) >> 16 & 0xff;
-            int g = (pixel) >> 8 & 0xff;
-            int b = (pixel) & 0xff;
-            builder.append("[").append(r).append(",").append(g).append(",").append(b).append("]");
+            bytes[index++] = (byte) (pixel >> 16 & 0xff);
+            bytes[index++] = (byte) (pixel >> 8 & 0xff);
+            bytes[index++] = (byte) (pixel & 0xff);
         }
-        return builder.toString();
+
+        return bytes;
     }
 
 }

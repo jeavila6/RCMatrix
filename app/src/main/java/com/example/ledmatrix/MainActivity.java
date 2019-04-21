@@ -3,6 +3,7 @@ package com.example.ledmatrix;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.ParcelUuid;
 import android.support.design.widget.BottomNavigationView;
@@ -13,10 +14,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.EditText;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.UUID;
 
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "LEDMatrix"; // for writing logs
 
+    private FragmentManager mFragmentManager;
     private OutputStream mOutputStream;
 
     @Override
@@ -31,11 +33,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mFragmentManager = getSupportFragmentManager();
+
         // set toolbar as app bar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // open fragment on bottom navigation view item selection
+        // open fragment on navigation item selection
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId()) {
@@ -64,8 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
     // replace main layout with fragment
     public void openFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        FragmentTransaction transaction = mFragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_frame_layout, fragment);
         transaction.commit();
     }
@@ -125,13 +128,31 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        // for now, send input text from TextFragment
-        EditText textEditText = findViewById(R.id.text_edit_text);
-        String message = textEditText.getText().toString();
-        try {
-            mOutputStream.write(message.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
+        new SendTask().execute();
+
+    }
+
+    private class SendTask extends AsyncTask<Void, Integer, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            Fragment currentFragment = mFragmentManager.findFragmentById(R.id.fragment_frame_layout);
+            byte[] bytes = ((PhotoFragment) currentFragment).getMessage();
+
+            Log.d(TAG, "Sending (message): " + Arrays.toString(bytes));
+            Log.d(TAG, "Sending (size, bytes): " + bytes.length);
+
+            // send message
+            try {
+                mOutputStream.write('I');
+                mOutputStream.write(bytes);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
         }
+
     }
 }
