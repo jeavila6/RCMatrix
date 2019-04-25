@@ -13,12 +13,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import static android.app.Activity.RESULT_OK;
-
 public class PhotoFragment extends Fragment {
 
-    // request codes for starting activities
-    private final int REQ_CODE_PICK = 0;
+    // request codes
+    private final int REQ_CODE_PICK = 1;
 
     ImageView mPhotoImageView;
 
@@ -35,7 +33,6 @@ public class PhotoFragment extends Fragment {
 
             // filter jpeg, png, gif, etc.
             pickIntent.setType("image/*");
-
             startActivityForResult(pickIntent, REQ_CODE_PICK);
         });
 
@@ -44,17 +41,11 @@ public class PhotoFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQ_CODE_PICK) {
+            Uri selectedImage = data.getData();
 
-        if (resultCode != RESULT_OK)
-            return;
-
-        switch(requestCode) {
-            case REQ_CODE_PICK:
-                Uri selectedImage = data.getData();
-
-                // display selected photo in image view
-                mPhotoImageView.setImageURI(selectedImage);
+            // display selected photo in image view
+            mPhotoImageView.setImageURI(selectedImage);
         }
     }
 
