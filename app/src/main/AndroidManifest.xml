@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ledmatrix">
+    package="com.example.rcmatrix">
     <!-- for Bluetooth communication -->
     <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- for initiating device discovery and manipulating Bluetooth settings -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- for canceling discovery -->
@@ -14,10 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ConnectActivity"
+            android:name="com.example.rcmatrix.ConnectActivity"
             android:label="@string/title_activity_connect"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name="com.example.rcmatrix.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

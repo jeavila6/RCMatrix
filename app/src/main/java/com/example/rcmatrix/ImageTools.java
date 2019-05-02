@@ -1,4 +1,4 @@
-package com.example.ledmatrix;
+package com.example.rcmatrix;
 
 import android.graphics.Bitmap;
 

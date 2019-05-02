@@ -1,4 +1,4 @@
-package com.example.ledmatrix;
+package com.example.rcmatrix;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
