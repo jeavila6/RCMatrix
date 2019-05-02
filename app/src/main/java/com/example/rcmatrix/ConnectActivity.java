@@ -74,7 +74,7 @@ public class ConnectActivity extends AppCompatActivity {
         fab.setOnClickListener(v -> {
             Intent data = new Intent();
             // TODO return different result if no selection
-            BluetoothDevice device = mAdapter.getSelectedPosition();
+            BluetoothDevice device = mAdapter.getSelection();
             data.putExtra(EXTRA_ADDRESS, device);
             setResult(RESULT_OK, data);
             finish();

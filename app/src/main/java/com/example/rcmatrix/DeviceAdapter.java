@@ -13,7 +13,7 @@ import java.util.List;
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder> {
 
     private List<BluetoothDevice> mDeviceList; // data set
-    private int selectedPosition = -1; // index of selected device
+    private int mSelection; // index of selected device
 
     class DeviceViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -29,13 +29,16 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
 
         @Override
         public void onClick(View itemView) {
-            selectedPosition = getLayoutPosition();
-            notifyDataSetChanged();
+            int previousSelection = mSelection;
+            mSelection = getLayoutPosition();
+            notifyItemChanged(previousSelection);
+            notifyItemChanged(mSelection);
         }
     }
 
     DeviceAdapter(List<BluetoothDevice> deviceList) {
         mDeviceList = deviceList;
+        mSelection = -1;
     }
 
     @NonNull
@@ -52,7 +55,7 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
 
         // set text for device name, decorate if selected
         String name = device.getName();
-        if (position == selectedPosition)
+        if (position == mSelection)
             name = ">" + name + "<";
         holder.nameTextView.setText(name);
 
@@ -67,8 +70,8 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
         return mDeviceList.size();
     }
 
-    BluetoothDevice getSelectedPosition() {
-        return mDeviceList.get(selectedPosition);
+    BluetoothDevice getSelection() {
+        return mDeviceList.get(mSelection);
     }
 
 }
