@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LED Matrix Controller</string>
+    <string name="app_name">RCMatrix</string>
     <string name="browse_button">Browse</string>
     <string name="camera_button">Camera</string>
     <string name="color_label">Color</string>
