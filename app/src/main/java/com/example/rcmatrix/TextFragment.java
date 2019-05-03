@@ -9,6 +9,8 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import java.util.Objects;
+
 import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class TextFragment extends Fragment {
@@ -24,21 +26,19 @@ public class TextFragment extends Fragment {
     }
 
     private void showColorPicker() {
-
-        ColorPicker colorPicker = new ColorPicker(getActivity());
-        colorPicker.show();
-
-        colorPicker.setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
+        ColorPicker colorPicker = new ColorPicker(Objects.requireNonNull(getActivity()));
+        colorPicker.setOnFastChooseColorListener(new ColorPicker.OnFastChooseColorListener() {
             @Override
-            public void onChooseColor(int position, int color) {
-                // ...
+            public void setOnFastChooseColorListener(int position, int color) {
             }
 
             @Override
             public void onCancel(){
-                // ...
             }
-        });
+        })
+                .setTitle(getResources().getString(R.string.color_picker_title))
+                .setRoundColorButton(true)
+                .show();
     }
 
     public byte[] getMessage() {
