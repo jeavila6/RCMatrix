@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.ParcelUuid;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,15 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mMessageHandler = new Handler() {
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-            }
-
-            public void obtainMessage(int code, int i, int j, byte[] data) {
-                return;
-            }
-        };
+        mMessageHandler = new Handler(new MessageHandler());
 
         mFragmentManager = getSupportFragmentManager();
 
@@ -130,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
         Fragment currentFragment = mFragmentManager.findFragmentById(R.id.fragment_frame_layout);
         byte[] bytes = ((PhotoFragment) currentFragment).getMessage();
 
-        // TODO check if ConnectedThread has been started
         mConnectedThread.write("I".getBytes());
         mConnectedThread.write(bytes);
 
@@ -138,9 +129,49 @@ public class MainActivity extends AppCompatActivity {
 
     // constants used when transmitting messages between service and UI
     private interface MessageConstants {
-        public static final int MESSAGE_READ = 0;
-        public static final int MESSAGE_WRITE = 1;
-        public static final int MESSAGE_TOAST = 2;
+        int MESSAGE_READ = 0;
+        int MESSAGE_WRITE = 1;
+        int MESSAGE_ERROR = 2;
+    }
+
+    private class ConnectThread extends Thread {
+        private final BluetoothSocket mmSocket;
+
+        ConnectThread(BluetoothDevice device) {
+
+            // use temporary object since mmSocket is final
+            BluetoothSocket tmp = null;
+
+            // attempt to create socket
+            try {
+                UUID id = device.getUuids()[0].getUuid();
+                tmp = device.createRfcommSocketToServiceRecord(id);
+            } catch (IOException e) {
+                Log.e(TAG, "Socket's create() method failed", e);
+            }
+
+            // assign socket if successful
+            mmSocket = tmp;
+        }
+
+        public void run() {
+
+            // attempt to connect to device through socket, otherwise close socket and return
+            try {
+                mmSocket.connect();
+            } catch (IOException connectException) {
+                try {
+                    mmSocket.close();
+                } catch (IOException e) {
+                    Log.e(TAG, "Could not close client socket", e);
+                }
+                return;
+            }
+
+            // perform work in separate thread if successful
+            mConnectedThread = new ConnectedThread(mmSocket);
+            mConnectedThread.start();
+        }
     }
 
     private class ConnectedThread extends Thread {
@@ -151,10 +182,12 @@ public class MainActivity extends AppCompatActivity {
 
         ConnectedThread(BluetoothSocket socket) {
             mmSocket = socket;
+
+            // use temporary object since input and output streams are final
             InputStream tmpIn = null;
             OutputStream tmpOut = null;
 
-            // get the input and output streams; using temp objects because streams are final
+            // attempt to create input and output streams
             try {
                 tmpIn = socket.getInputStream();
             } catch (IOException e) {
@@ -166,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "Error occurred when creating output stream", e);
             }
 
+            // assign input and output streams if successful
             mmInStream = tmpIn;
             mmOutStream = tmpOut;
         }
@@ -174,117 +208,61 @@ public class MainActivity extends AppCompatActivity {
             mmBuffer = new byte[1024];
             int numBytes;
 
-            // keep listening to the InputStream until an exception occurs
+            // keep listening to input stream until an exception occurs
             while (true) {
                 try {
 
-                    // read from the InputStream
+                    // read from input stream
                     numBytes = mmInStream.read(mmBuffer);
 
-                    // send the obtained bytes to the UI activity
-                    Message readMsg = mMessageHandler.obtainMessage(
+                    // send obtained bytes back to activity (unhandled for now)
+                    Message readMessage = mMessageHandler.obtainMessage(
                             MessageConstants.MESSAGE_READ, numBytes, -1, mmBuffer);
-                    readMsg.sendToTarget();
+                    readMessage.sendToTarget();
 
                 } catch (IOException e) {
-                    Log.d(TAG, "Input stream was disconnected", e);
+                    Log.e(TAG, "Input stream was disconnected", e);
                     break;
                 }
             }
         }
 
-        // called from main activity to send data to the remote device.
+        // called from main activity to send data
         void write(byte[] bytes) {
             try {
+
+                // write to output stream
                 mmOutStream.write(bytes);
 
-                // share sent message with UI activity
+                // send sent message back to activity
                 Message writtenMsg = mMessageHandler.obtainMessage(
                         MessageConstants.MESSAGE_WRITE, -1, -1, mmBuffer);
                 writtenMsg.sendToTarget();
+
             } catch (IOException e) {
                 Log.e(TAG, "Error occurred when sending data", e);
 
-                // send a failure message back to activity
+                // send failure message back to activity
                 Message writeErrorMsg =
-                        mMessageHandler.obtainMessage(MessageConstants.MESSAGE_TOAST);
-                Bundle bundle = new Bundle();
-                bundle.putString("toast",
-                        "Couldn't send data to the other device");
-                writeErrorMsg.setData(bundle);
+                        mMessageHandler.obtainMessage(MessageConstants.MESSAGE_ERROR);
                 mMessageHandler.sendMessage(writeErrorMsg);
-            }
-        }
-
-        // called from main activity to shut down connection
-        public void cancel() {
-            try {
-                mmSocket.close();
-            } catch (IOException e) {
-                Log.e(TAG, "Could not close the connect socket", e);
             }
         }
     }
 
-    private class ConnectThread extends Thread {
-
-        private final BluetoothSocket mmSocket;
-        private final BluetoothDevice mmDevice;
-
-        ConnectThread(BluetoothDevice device) {
-
-            // use temp object to later assign to mmSocket
-            BluetoothSocket tmp = null;
-            mmDevice = device;
-
-            try {
-
-                // get device UUID
-                ParcelUuid[] uuids = mmDevice.getUuids();
-                UUID serviceRecordUuid = uuids[0].getUuid();
-
-                tmp = device.createRfcommSocketToServiceRecord(serviceRecordUuid);
-            } catch (IOException e) {
-                Log.e(TAG, "socket's create() method failed", e);
+    private class MessageHandler implements Handler.Callback {
+        public boolean handleMessage(Message msg) {
+            switch(msg.what) {
+                case MessageConstants.MESSAGE_WRITE:
+                    Toast.makeText(MainActivity.this, "Message sent successfully.",
+                            Toast.LENGTH_LONG).show();
+                    break;
+                case MessageConstants.MESSAGE_ERROR:
+                    Toast.makeText(MainActivity.this, "Error sending message.",
+                            Toast.LENGTH_LONG).show();
+                    break;
             }
-            mmSocket = tmp;
-        }
-
-        public void run() {
-
-            // cancel discovery
-            // bluetoothAdapter.cancelDiscovery();
-
-            try {
-
-                // connect to remote device through socket
-                // this call blocks until it succeeds or throws an exception
-                mmSocket.connect();
-
-            } catch (IOException connectException) {
-                // unable to connect; close the socket and return
-                try {
-                    mmSocket.close();
-                } catch (IOException closeException) {
-                    Log.e(TAG, "could not close the client socket", closeException);
-                }
-                return;
-            }
-
-            // connection attempt succeeded, perform work in a separate thread
-            Log.d(TAG, "Connection attempt succeeded");
-            mConnectedThread = new ConnectedThread(mmSocket);
-            mConnectedThread.start();
-
-        }
-
-        // close client socket and causes the thread to finish
-        public void cancel() {
-            try {
-                mmSocket.close();
-            } catch (IOException e) {
-                Log.e(TAG, "Could not close the client socket", e);
-            }
+            return false;
         }
     }
 }
