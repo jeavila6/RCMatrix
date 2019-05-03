@@ -18,4 +18,11 @@
     <string name="no_connection">"Connection hasn't been established"</string>
     <string name="send_success">Message sent successfully</string>
     <string name="send_fail">Failed to send message</string>
+    <string name="stroke_width_label">Stroke Width</string>
+    <string name="clear">Clear</string>
+    <string-array name="stroke_width_array">
+        <item>Fine</item>
+        <item>Medium</item>
+        <item>Bold</item>
+    </string-array>
 </resources>
