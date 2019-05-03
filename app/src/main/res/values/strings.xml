@@ -16,4 +16,6 @@
     <string name="color_content_description">Selected color</string>
     <string name="color_picker_title">Select text color</string>
     <string name="no_connection">Connection hasn\'t been established</string>
+    <string name="send_success">Message sent successfully</string>
+    <string name="send_fail">Failed to send message</string>
 </resources>

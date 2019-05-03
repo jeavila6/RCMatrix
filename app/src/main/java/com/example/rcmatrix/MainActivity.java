@@ -258,14 +258,15 @@ public class MainActivity extends AppCompatActivity {
 
     private class MessageHandler implements Handler.Callback {
         public boolean handleMessage(Message msg) {
+            String toastText;
             switch(msg.what) {
                 case MessageConstants.MESSAGE_WRITE:
-                    Toast.makeText(MainActivity.this, "Message sent successfully.",
-                            Toast.LENGTH_LONG).show();
+                    toastText = getResources().getString(R.string.send_success);
+                    Toast.makeText(MainActivity.this, toastText, Toast.LENGTH_SHORT).show();
                     break;
                 case MessageConstants.MESSAGE_ERROR:
-                    Toast.makeText(MainActivity.this, "Error sending message.",
-                            Toast.LENGTH_LONG).show();
+                    toastText = getResources().getString(R.string.send_fail);
+                    Toast.makeText(MainActivity.this, toastText, Toast.LENGTH_SHORT).show();
                     break;
             }
             return false;
