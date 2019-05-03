@@ -119,9 +119,15 @@ public class MainActivity extends AppCompatActivity {
     // send data to connected device
     public void sendDataBluetooth() {
 
+        // display error if connected thread hasn't started
+        if (mConnectedThread == null) {
+            String toastText = getResources().getString(R.string.no_connection);
+            Toast.makeText(MainActivity.this, toastText, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Fragment currentFragment = mFragmentManager.findFragmentById(R.id.fragment_frame_layout);
         byte[] bytes = ((PhotoFragment) currentFragment).getMessage();
-
         mConnectedThread.write("I".getBytes());
         mConnectedThread.write(bytes);
 
