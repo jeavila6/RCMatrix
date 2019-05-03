@@ -10,47 +10,51 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:labelFor="@+id/input_edit_text"
-
+        android:layout_marginTop="8dp"
         android:text="@string/text_label"
-        app:layout_constraintBottom_toBottomOf="@+id/input_edit_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/input_edit_text" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/input_edit_text"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:autofillHints=""
         android:ems="10"
+        android:hint="@string/text_hint"
         android:inputType="textPersonName"
-        app:layout_constraintStart_toEndOf="@id/text_label_text_view"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_label_text_view"
         tools:targetApi="o" />
+
+    <ImageButton
+        android:id="@+id/color_image_button"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:padding="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/color_label_text_view"
+        app:srcCompat="@color/colorAccent"
+        android:contentDescription="@string/color_content_description" />
 
     <TextView
-        android:id="@+id/color_text_view"
+        android:id="@+id/color_label_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:labelFor="@+id/color_edit_text"
+        android:layout_marginTop="16dp"
         android:text="@string/color_label"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/input_edit_text" />
-
-    <EditText
-        android:id="@+id/color_edit_text"
-        android:layout_width="0dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="@+id/color_text_view"
-        app:layout_constraintStart_toEndOf="@+id/color_text_view"
-        app:layout_constraintTop_toTopOf="@+id/color_text_view"
-        tools:targetApi="o" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
