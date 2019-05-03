@@ -42,7 +42,7 @@ public class PhotoFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQ_CODE_PICK) {
+        if (requestCode == REQ_CODE_PICK && data != null) {
             Uri selectedImage = data.getData();
 
             // display selected photo in image view
