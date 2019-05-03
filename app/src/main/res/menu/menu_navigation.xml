@@ -16,7 +16,6 @@
         android:icon="@drawable/ic_text_fields_white_24dp"
         android:title="@string/title_text" />
     <item
-        android:id="@+id/navigation_audio"
         android:icon="@drawable/ic_music_note_white_24dp"
         android:title="@string/title_audio" />
 

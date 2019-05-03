@@ -13,7 +13,7 @@ import java.util.Objects;
 
 import petrov.kristiyan.colorpicker.ColorPicker;
 
-public class TextFragment extends Fragment {
+class TextFragment extends Fragment {
 
     private ImageButton mColorImageButton;
 
@@ -44,8 +44,10 @@ public class TextFragment extends Fragment {
                 .show();
     }
 
+    /*
     public byte[] getMessage() {
         String message = "empty";
         return message.getBytes();
     }
+    */
 }

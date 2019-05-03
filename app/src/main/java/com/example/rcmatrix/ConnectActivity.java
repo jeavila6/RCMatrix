@@ -16,6 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class ConnectActivity extends AppCompatActivity {
@@ -23,7 +24,7 @@ public class ConnectActivity extends AppCompatActivity {
     private final String TAG = this.getClass().getName(); // for writing logs
 
     // extras names
-    private static final String EXTRA_ADDRESS = "com.example.ledmatrix.address";
+    private static final String EXTRA_ADDRESS = "com.example.rcmatrix.address";
 
     // request codes
     private final int REQUEST_ENABLE_BT = 1;
@@ -97,7 +98,7 @@ public class ConnectActivity extends AppCompatActivity {
 
     // called by parent activity to retrieve address extra
     public static BluetoothDevice getExtraAddress(Intent result) {
-        return result.getExtras().getParcelable(EXTRA_ADDRESS);
+        return Objects.requireNonNull(result.getExtras()).getParcelable(EXTRA_ADDRESS);
     }
 
 }

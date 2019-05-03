@@ -14,12 +14,12 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-public class PhotoFragment extends Fragment {
+class PhotoFragment extends Fragment {
 
     // request codes
     private final int REQ_CODE_PICK = 1;
 
-    ImageView mPhotoImageView;
+    private ImageView mPhotoImageView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,13 +50,13 @@ public class PhotoFragment extends Fragment {
         }
     }
 
-    public byte[] getMessage() {
+    byte[] getMessage() {
 
         // get image from image view
         Bitmap bitmap = ((BitmapDrawable) mPhotoImageView.getDrawable()).getBitmap();
 
         // resize and return RGB values for pixels
-        bitmap = ImageTools.resizeBitmap(bitmap, 64, 64);
+        bitmap = ImageTools.resizeBitmap(bitmap);
         return ImageTools.bitmapToRgb(bitmap);
     }
 }

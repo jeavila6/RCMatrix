@@ -110,14 +110,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // replace main layout with fragment
-    public void openFragment(Fragment fragment) {
+    private void openFragment(Fragment fragment) {
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         transaction.replace(R.id.fragment_frame_layout, fragment);
         transaction.commit();
     }
 
     // send data to connected device
-    public void sendDataBluetooth() {
+    private void sendDataBluetooth() {
 
         // display error if connected thread hasn't started
         if (mConnectedThread == null) {
@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Fragment currentFragment = mFragmentManager.findFragmentById(R.id.fragment_frame_layout);
+        assert currentFragment != null;
         byte[] bytes = ((PhotoFragment) currentFragment).getMessage();
         mConnectedThread.write("I".getBytes());
         mConnectedThread.write(bytes);
@@ -181,13 +182,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class ConnectedThread extends Thread {
-        private final BluetoothSocket mmSocket;
         private final InputStream mmInStream;
         private final OutputStream mmOutStream;
         private byte[] mmBuffer;
 
         ConnectedThread(BluetoothSocket socket) {
-            mmSocket = socket;
 
             // use temporary object since input and output streams are final
             InputStream tmpIn = null;

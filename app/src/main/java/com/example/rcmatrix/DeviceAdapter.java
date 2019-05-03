@@ -13,13 +13,13 @@ import java.util.List;
 
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder> {
 
-    private List<BluetoothDevice> mDeviceList; // data set
+    private final List<BluetoothDevice> mDeviceList; // data set
     private int mSelection; // index of selected device
 
     class DeviceViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        private TextView nameTextView;
-        private TextView addressTextView;
+        private final TextView nameTextView;
+        private final TextView addressTextView;
 
         DeviceViewHolder(View itemView) {
             super(itemView);

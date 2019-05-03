@@ -5,14 +5,12 @@ import android.graphics.Bitmap;
 class ImageTools {
 
     /**
-     * Return resized Bitmap from Bitmap.
+     * Return resized 64x64 Bitmap from Bitmap.
      * @param bitmap source Bitmap
-     * @param width pixel width
-     * @param height pixel height
      * @return resized Bitmap
      */
-    static Bitmap resizeBitmap(Bitmap bitmap, int width, int height) {
-        return Bitmap.createScaledBitmap(bitmap, width, height, true);
+    static Bitmap resizeBitmap(Bitmap bitmap) {
+        return Bitmap.createScaledBitmap(bitmap, 64, 64, true);
     }
 
     /**
