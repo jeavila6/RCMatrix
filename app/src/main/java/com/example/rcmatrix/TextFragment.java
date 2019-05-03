@@ -15,12 +15,14 @@ import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class TextFragment extends Fragment {
 
+    private ImageButton mColorImageButton;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_text, container, false);
 
-        ImageButton colorImageButton = view.findViewById(R.id.color_image_button);
-        colorImageButton.setOnClickListener(v -> showColorPicker());
+        mColorImageButton = view.findViewById(R.id.color_image_button);
+        mColorImageButton.setOnClickListener(v -> showColorPicker());
 
         return view;
     }
@@ -30,6 +32,7 @@ public class TextFragment extends Fragment {
         colorPicker.setOnFastChooseColorListener(new ColorPicker.OnFastChooseColorListener() {
             @Override
             public void setOnFastChooseColorListener(int position, int color) {
+                mColorImageButton.setBackgroundColor(color);
             }
 
             @Override

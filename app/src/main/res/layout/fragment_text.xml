@@ -38,12 +38,12 @@
         android:layout_height="64dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="@color/colorAccent"
+        android:contentDescription="@string/color_content_description"
         android:padding="0dp"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/color_label_text_view"
-        app:srcCompat="@color/colorAccent"
-        android:contentDescription="@string/color_content_description" />
+        app:layout_constraintTop_toBottomOf="@+id/color_label_text_view" />
 
     <TextView
         android:id="@+id/color_label_text_view"
