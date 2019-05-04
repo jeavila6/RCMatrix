@@ -15,7 +15,7 @@
     </style>
 
     <!-- button theme -->
-    <style name="ButtonTheme" parent="Widget.AppCompat.Button.Colored">
+    <style name="ButtonTheme" parent="Widget.AppCompat.Button">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:drawablePadding">4dp</item>
     </style>

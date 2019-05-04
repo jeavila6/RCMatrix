@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/photo_image_view"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
         android:layout_marginTop="8dp"
         android:background="@android:color/darker_gray"
         android:contentDescription="@string/photo_content_description"
