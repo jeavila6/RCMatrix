@@ -37,6 +37,8 @@ class PhotoFragment extends Fragment {
             startActivityForResult(pickIntent, REQ_CODE_PICK);
         });
 
+        mPhotoImageView.setBackgroundColor(getResources().getColor(R.color.color_gray_50));
+
         return rootView;
     }
 

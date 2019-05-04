@@ -16,8 +16,8 @@ import java.util.ArrayList;
 public class PaintView extends View {
 
     // default values for stroke properties
-    private static final int DEFAULT_FG_COLOR = Color.BLACK;
-    private static final int DEFAULT_BG_COLOR = Color.WHITE;
+    private static final int DEFAULT_FG_COLOR = Color.parseColor("#212121");
+    private static final int DEFAULT_BG_COLOR = Color.parseColor("#fafafa");
     private static final int DEFAULT_STROKE_WIDTH = 20;
 
     // stroke properties

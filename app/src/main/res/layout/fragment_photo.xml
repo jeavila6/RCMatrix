@@ -10,7 +10,6 @@
         android:layout_width="400dp"
         android:layout_height="400dp"
         android:layout_marginTop="8dp"
-        android:background="@android:color/darker_gray"
         android:contentDescription="@string/photo_content_description"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
