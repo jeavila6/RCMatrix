@@ -24,6 +24,10 @@ class TextFragment extends Fragment {
         mColorImageButton = view.findViewById(R.id.color_image_button);
         mColorImageButton.setOnClickListener(v -> showColorPicker());
 
+        // set color picker to default color
+        mColorImageButton.setBackgroundColor(getResources().getColor(R.color.color_gray_50));
+
+
         return view;
     }
 
@@ -40,6 +44,7 @@ class TextFragment extends Fragment {
             }
         })
                 .setTitle(getResources().getString(R.string.color_picker_title))
+                .setColors(getResources().getIntArray(R.array.color_picker_colors))
                 .setRoundColorButton(true)
                 .show();
     }

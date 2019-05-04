@@ -7,10 +7,10 @@
         android:right="-1dp"
         android:top="1dp">
         <shape android:shape="rectangle">
-            <solid android:color="@color/colorPrimaryDark" />
+            <solid android:color="@color/color_primary_dark" />
             <stroke
                 android:width="0.5dp"
-                android:color="@color/colorBorder" />
+                android:color="@color/color_border" />
         </shape>
     </item>
 </layer-list>

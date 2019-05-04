@@ -77,6 +77,7 @@ class DrawFragment extends Fragment {
                 }
             })
                     .setTitle(getResources().getString(R.string.color_picker_title))
+                    .setColors(getResources().getIntArray(R.array.color_picker_colors))
                     .setRoundColorButton(true)
                     .show();
         });
@@ -96,9 +97,15 @@ class DrawFragment extends Fragment {
                 }
             })
                     .setTitle(getResources().getString(R.string.color_picker_title))
+                    .setColors(getResources().getIntArray(R.array.color_picker_colors))
                     .setRoundColorButton(true)
                     .show();
         });
+
+        // set color pickers to default colors
+        fgColorImageButton.setBackgroundColor(getResources().getColor(R.color.color_gray_50));
+        fgColorImageButton.setBackgroundColor(getResources().getColor(R.color.color_gray_900));
+
         return view;
     }
 }
