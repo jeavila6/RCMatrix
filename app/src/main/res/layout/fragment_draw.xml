@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.example.rcmatrix.PaintView
-        android:id="@+id/paintView"
+        android:id="@+id/paint_view"
         android:layout_width="400dp"
         android:layout_height="400dp"
         android:layout_marginStart="8dp"
@@ -18,12 +17,11 @@
 
     <Spinner
         android:id="@+id/stroke_width_spinner"
-        android:layout_width="200dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@+id/stroke_width_label_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/paintView" />
+        app:layout_constraintBottom_toBottomOf="@+id/stroke_width_label_text_view"
+        app:layout_constraintStart_toEndOf="@+id/stroke_width_label_text_view" />
 
     <TextView
         android:id="@+id/stroke_width_label_text_view"
@@ -33,7 +31,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/stroke_width_label"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/paintView" />
+        app:layout_constraintTop_toBottomOf="@+id/paint_view" />
 
     <Button
         android:id="@+id/clear_button"
@@ -43,6 +41,52 @@
         android:layout_marginTop="8dp"
         android:text="@string/clear"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bg_color_image_button" />
+
+    <ImageButton
+        android:id="@+id/fg_color_image_button"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorAccent"
+        android:contentDescription="@string/color_content_description"
+        android:padding="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fg_color_label_text_view" />
+
+    <ImageButton
+        android:id="@+id/bg_color_image_button"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/colorAccent"
+        android:contentDescription="@string/color_content_description"
+        android:padding="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@+id/bg_color_label_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/bg_color_label_text_view" />
+
+    <TextView
+        android:id="@+id/fg_color_label_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/fg_color_label"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stroke_width_label_text_view" />
+
+    <TextView
+        android:id="@+id/bg_color_label_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/bg_color_label"
+        app:layout_constraintStart_toEndOf="@+id/fg_color_label_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/stroke_width_spinner" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

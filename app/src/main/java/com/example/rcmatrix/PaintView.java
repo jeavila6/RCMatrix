@@ -21,8 +21,8 @@ public class PaintView extends View {
     private static final int DEFAULT_STROKE_WIDTH = 20;
 
     // stroke properties
-    private int mForegroundColor;
-    private int mBackgroundColor;
+    private int mFgColor;
+    private int mBgColor;
     private int mStrokeWidth;
 
     private ArrayList<DrawPath> mDrawPaths = new ArrayList<>();
@@ -47,8 +47,8 @@ public class PaintView extends View {
         mPaint.setXfermode(null);
         mPaint.setAlpha(0xff);
 
-        mForegroundColor = DEFAULT_FG_COLOR;
-        mBackgroundColor = DEFAULT_BG_COLOR;
+        mFgColor = DEFAULT_FG_COLOR;
+        mBgColor = DEFAULT_BG_COLOR;
         mStrokeWidth = DEFAULT_STROKE_WIDTH;
     }
 
@@ -65,8 +65,9 @@ public class PaintView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.save();
-        mCanvas.drawColor(mBackgroundColor);
+        mCanvas.drawColor(mBgColor);
 
+        // redraw all paths
         for (DrawPath drawPath : mDrawPaths) {
             mPaint.setColor(drawPath.color);
             mPaint.setStrokeWidth(drawPath.strokeWidth);
@@ -80,7 +81,7 @@ public class PaintView extends View {
 
     private void touchStart(float x, float y) {
         mPath = new Path();
-        DrawPath drawPath = new DrawPath(mForegroundColor, mStrokeWidth, mPath);
+        DrawPath drawPath = new DrawPath(mFgColor, mStrokeWidth, mPath);
         mDrawPaths.add(drawPath);
         mPath.reset();
         mPath.moveTo(x, y);
@@ -123,12 +124,36 @@ public class PaintView extends View {
                 invalidate();
                 break;
         }
-
         return true;
     }
 
-    public void setStrokeWidth(int mStrokeWidth) {
-        this.mStrokeWidth = (mStrokeWidth + 1) * DEFAULT_STROKE_WIDTH;
+    public void setStrokeWidth(int strokeWidth) {
+        mStrokeWidth = (strokeWidth + 1) * DEFAULT_STROKE_WIDTH;
+    }
+
+    public void setFgColor(int color) {
+        mFgColor = color;
+    }
+
+    public void setBgColor(int color) {
+        mBgColor = color;
+        mCanvas.drawColor(mBgColor);
+
+        // redraw all paths
+        for (DrawPath drawPath : mDrawPaths) {
+            mPaint.setColor(drawPath.color);
+            mPaint.setStrokeWidth(drawPath.strokeWidth);
+            mPaint.setMaskFilter(null);
+            mCanvas.drawPath(drawPath.path, mPaint);
+        }
+    }
+
+    public int getFgColor() {
+        return mFgColor;
+    }
+
+    public int getBgColor() {
+        return mBgColor;
     }
 
     private class DrawPath {

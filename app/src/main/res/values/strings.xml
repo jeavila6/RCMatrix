@@ -20,6 +20,8 @@
     <string name="send_fail">Failed to send message</string>
     <string name="stroke_width_label">Stroke Width</string>
     <string name="clear">Clear</string>
+    <string name="fg_color_label">Foreground Color</string>
+    <string name="bg_color_label">Background Color</string>
     <string-array name="stroke_width_array">
         <item>Fine</item>
         <item>Medium</item>
