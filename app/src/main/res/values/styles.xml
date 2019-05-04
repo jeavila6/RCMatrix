@@ -28,6 +28,11 @@
         <item name="labelVisibilityMode">unlabeled</item>
     </style>
 
+    <!-- label text view style -->
+    <style name="LabelTheme" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <!-- added by default new activity when connect activity was added -->
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

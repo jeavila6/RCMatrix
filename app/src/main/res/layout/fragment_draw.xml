@@ -25,6 +25,7 @@
 
     <TextView
         android:id="@+id/stroke_width_label_text_view"
+        style="@style/LabelTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -35,10 +36,12 @@
 
     <Button
         android:id="@+id/clear_button"
+        style="@style/ButtonTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:drawableStart="@drawable/ic_clear_white_24dp"
         android:text="@string/clear"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bg_color_image_button" />
@@ -71,6 +74,7 @@
 
     <TextView
         android:id="@+id/fg_color_label_text_view"
+        style="@style/LabelTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -81,6 +85,7 @@
 
     <TextView
         android:id="@+id/bg_color_label_text_view"
+        style="@style/LabelTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
