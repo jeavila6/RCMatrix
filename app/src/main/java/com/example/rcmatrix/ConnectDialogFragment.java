@@ -18,7 +18,7 @@ import androidx.fragment.app.DialogFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConnectDialogFragment extends DialogFragment {
+class ConnectDialogFragment extends DialogFragment {
 
     // hosting activity must implement this interface to receive event callbacks
     public interface NoticeDialogListener {

@@ -25,14 +25,14 @@ public class PaintView extends View {
     private int mBgColor;
     private int mStrokeWidth;
 
-    private ArrayList<DrawPath> mDrawPaths = new ArrayList<>();
+    private final ArrayList<DrawPath> mDrawPaths = new ArrayList<>();
     private float mXPosition;
     private float mYPosition;
     private Path mPath;
-    private Paint mPaint;
+    private final Paint mPaint;
     private Bitmap mBitmap;
     private Canvas mCanvas;
-    private Paint mBitmapPaint = new Paint(Paint.DITHER_FLAG);
+    private final Paint mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 
     public PaintView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -158,9 +158,9 @@ public class PaintView extends View {
 
     private class DrawPath {
 
-        private int color;
-        private int strokeWidth;
-        private android.graphics.Path path;
+        private final int color;
+        private final int strokeWidth;
+        private final android.graphics.Path path;
 
         DrawPath(int color, int strokeWidth, android.graphics.Path path) {
             this.color = color;
