@@ -22,6 +22,7 @@
     <string name="fg_color_label">Foreground Color</string>
     <string name="bg_color_label">Background Color</string>
     <string name="no_camera">No camera available</string>
+    <string name="about">About</string>
     <string-array name="stroke_width_array">
         <item>Fine</item>
         <item>Medium</item>
