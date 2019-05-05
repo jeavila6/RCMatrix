@@ -69,7 +69,7 @@ class PhotoFragment extends Fragment {
 
         // set image view placeholder image
         mPhotoImageView.setImageDrawable(getResources()
-                .getDrawable(R.drawable.ronaldo_arthur_vidal_66241_unsplash));
+                .getDrawable(R.drawable.emre_gencer_364602_unsplash));
 
         return rootView;
     }
