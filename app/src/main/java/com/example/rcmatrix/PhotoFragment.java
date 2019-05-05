@@ -67,7 +67,9 @@ class PhotoFragment extends Fragment {
                 Toast.makeText(getContext(), R.string.no_camera, Toast.LENGTH_SHORT).show();
         });
 
-        mPhotoImageView.setBackgroundColor(getResources().getColor(R.color.color_gray_50));
+        // set image view placeholder image
+        mPhotoImageView.setImageDrawable(getResources()
+                .getDrawable(R.drawable.ronaldo_arthur_vidal_66241_unsplash));
 
         return rootView;
     }
