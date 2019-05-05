@@ -9,11 +9,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,13 +42,13 @@ public class ConnectDialogFragment extends DialogFragment {
 
         // TODO show message if no paired devices, bondedList.isEmpty()
 
-        // set up paired devices RecyclerView
-        RecyclerView pairedRecyclerView = dialogView.findViewById(R.id.devices_recycler_view);
-        pairedRecyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        pairedRecyclerView.setLayoutManager(layoutManager);
-        DeviceAdapter mAdapter = new DeviceAdapter(bondedList);
-        pairedRecyclerView.setAdapter(mAdapter);
+        // build device radio group
+        RadioGroup deviceRadioGroup = dialogView.findViewById(R.id.device_radio_group);
+        for (BluetoothDevice device : bondedList) {
+            RadioButton button = new RadioButton(getContext());
+            button.setText(device.getName());
+            deviceRadioGroup.addView(button);
+        }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.DialogTheme);
 
@@ -57,8 +57,11 @@ public class ConnectDialogFragment extends DialogFragment {
 
         // set positive button for dialog, send positive button event back to host activity
         builder.setPositiveButton(R.string.connect_dialog_positive_button, (dialog, id) -> {
-            BluetoothDevice device = mAdapter.getSelection();
-            mListener.onDialogPositiveClick(device);
+            int checkedRadioButtonId = deviceRadioGroup.getCheckedRadioButtonId();
+            View checkedRadioButton = deviceRadioGroup.findViewById(checkedRadioButtonId);
+            int checkedRadioButtonIndex = deviceRadioGroup.indexOfChild(checkedRadioButton);
+            BluetoothDevice selectedDevice = bondedList.get(checkedRadioButtonIndex);
+            mListener.onDialogPositiveClick(selectedDevice);
         });
 
         return builder.create();
