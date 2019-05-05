@@ -50,7 +50,7 @@ public class ConnectDialogFragment extends DialogFragment {
         DeviceAdapter mAdapter = new DeviceAdapter(bondedList);
         pairedRecyclerView.setAdapter(mAdapter);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.DialogTheme);
 
         // set constructed layout for dialog
         builder.setView(dialogView);

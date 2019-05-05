@@ -32,4 +32,20 @@
     <style name="LabelTheme" parent="TextAppearance.AppCompat.Body1">
         <item name="android:textSize">16sp</item>
     </style>
+
+    <!-- device name text view style -->
+    <style name="DeviceNameTheme" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- alert dialog style -->
+    <style name="DialogTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:background">@color/color_primary</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/DialogPositiveButtonTheme</item>
+    </style>
+
+    <!-- alert dialog positive button style-->
+    <style name="DialogPositiveButtonTheme" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/color_accent</item>
+    </style>
 </resources>

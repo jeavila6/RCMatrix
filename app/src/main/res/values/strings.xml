@@ -9,7 +9,7 @@
     <string name="title_photo">Photo</string>
     <string name="title_text">Text</string>
     <string name="connect_item">Connect</string>
-    <string name="paired_devices">Paired Devices</string>
+    <string name="select_device">Select device:</string>
     <string name="text_hint">Enter some text</string>
     <string name="color_content_description">Selected color</string>
     <string name="color_picker_title">Select text color</string>
