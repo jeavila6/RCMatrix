@@ -9,7 +9,6 @@
     <string name="title_photo">Photo</string>
     <string name="title_text">Text</string>
     <string name="connect_item">Connect</string>
-    <string name="title_activity_connect">ConnectActivity</string>
     <string name="paired_devices">Paired Devices</string>
     <string name="text_hint">Enter some text</string>
     <string name="color_content_description">Selected color</string>
@@ -23,6 +22,8 @@
     <string name="bg_color_label">Background Color</string>
     <string name="no_camera">No camera available</string>
     <string name="about">About</string>
+    <string name="connect_dialog_positive_button">Connect</string>
+    <string name="no_device_selected">No device was selected</string>
     <string-array name="stroke_width_array">
         <item>Fine</item>
         <item>Medium</item>

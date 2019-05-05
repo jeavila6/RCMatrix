@@ -71,8 +71,9 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.DeviceView
         return mDeviceList.size();
     }
 
+    // return Bluetooth device if device was selected
     BluetoothDevice getSelection() {
-        return mDeviceList.get(mSelection);
+        return (mSelection >= 0) ? mDeviceList.get(mSelection) : null;
     }
 
 }

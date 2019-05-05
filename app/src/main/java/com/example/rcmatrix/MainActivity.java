@@ -1,5 +1,6 @@
 package com.example.rcmatrix;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
@@ -26,16 +27,20 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ConnectDialogFragment.NoticeDialogListener {
 
     private final String TAG = this.getClass().getName(); // for writing logs
 
     // request codes
-    private final int REQUEST_CONNECT = 1;
+    private final int REQUEST_ENABLE_BT = 1;
+
+    // fragment tags
+    private final String FRAGMENT_TAG_CONNECT = "connect_dialog";
 
     private FragmentManager mFragmentManager;
     private ConnectedThread mConnectedThread;
     private Handler mMessageHandler;
+    private BluetoothAdapter mBluetoothAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mMessageHandler = new Handler(new MessageHandler());
-
         mFragmentManager = getSupportFragmentManager();
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         // set toolbar as app bar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -76,21 +81,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
-        // fragments should handle result first, if needed
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQUEST_CONNECT) {
-
-            // attempt connection with given address
-            if (resultCode == RESULT_OK && data != null) {
-                BluetoothDevice device = ConnectActivity.getExtraAddress(data);
-                ConnectThread t = new ConnectThread(device);
-                t.start();
-            }
-
+        // show connect dialog if Bluetooth was enabled
+        if (requestCode == REQUEST_ENABLE_BT && resultCode == RESULT_OK) {
+            ConnectDialogFragment dialog = new ConnectDialogFragment();
+            dialog.show(mFragmentManager, FRAGMENT_TAG_CONNECT);
         }
+    }
+
+    // implementation of this interface is required to receive event callbacks from connect dialog
+    @Override
+    public void onDialogPositiveClick(BluetoothDevice device) {
+
+        if (device == null) {
+            Toast.makeText(this, R.string.no_device_selected, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // start connect thread with selected device
+        ConnectThread t = new ConnectThread(device);
+        t.start();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -99,13 +110,26 @@ public class MainActivity extends AppCompatActivity {
 
         connectItem.setOnMenuItemClickListener(v -> {
 
-            // start connect intent
-            Intent intent = new Intent(this, ConnectActivity.class);
-            startActivityForResult(intent, REQUEST_CONNECT);
+            mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+            // if Bluetooth is not supported, show toast and return
+            if (mBluetoothAdapter == null) {
+                Toast.makeText(this, "Bluetooth not supported", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            // if Bluetooth is not enabled, request user permission and return
+            if (!mBluetoothAdapter.isEnabled()) {
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                return false;
+            }
+
+            // show connect dialog
+            ConnectDialogFragment dialog = new ConnectDialogFragment();
+            dialog.show(mFragmentManager, FRAGMENT_TAG_CONNECT);
             return true;
-
         });
-
         return true;
     }
 
