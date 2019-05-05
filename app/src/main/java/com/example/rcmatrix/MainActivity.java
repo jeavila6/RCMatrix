@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements ConnectDialogFrag
 
     // fragment tags
     private final String FRAGMENT_TAG_CONNECT = "connect_dialog";
+    private final String FRAGMENT_TAG_ABOUT = "about_dialog";
 
     private FragmentManager mFragmentManager;
     private ConnectedThread mConnectedThread;
@@ -106,10 +107,11 @@ public class MainActivity extends AppCompatActivity implements ConnectDialogFrag
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         MenuItem connectItem = menu.findItem(R.id.connect_item);
+        MenuItem aboutItem = menu.findItem(R.id.about_item);
 
         connectItem.setOnMenuItemClickListener(v -> {
-
             mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
             // if Bluetooth is not supported, show toast and return
@@ -130,6 +132,15 @@ public class MainActivity extends AppCompatActivity implements ConnectDialogFrag
             dialog.show(mFragmentManager, FRAGMENT_TAG_CONNECT);
             return true;
         });
+
+        aboutItem.setOnMenuItemClickListener(v -> {
+
+            // show about dialog
+            AboutDialogFragment dialog = new AboutDialogFragment();
+            dialog.show(mFragmentManager, FRAGMENT_TAG_ABOUT);
+            return true;
+        });
+
         return true;
     }
 

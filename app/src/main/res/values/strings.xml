@@ -23,10 +23,17 @@
     <string name="no_camera">No camera available</string>
     <string name="about">About</string>
     <string name="connect_dialog_positive_button">Connect</string>
+    <string name="about_dialog_positive_button">Close</string>
     <string name="no_device_selected">No device was selected</string>
     <string-array name="stroke_width_array">
         <item>Fine</item>
         <item>Medium</item>
         <item>Bold</item>
     </string-array>
+    <string name="about_information">
+        <ul>\n
+            <li><b>ColorPicker</b> by <a href="https://github.com/kristiyanP">kristiyanP</a> on <a href="https://github.com/kristiyanP/colorpicker">GitHub</a></li>\n
+            <li><b>Coffee Cup Plate</b> by <a href="https://unsplash.com/@reo">Emre Gencer</a> on <a href="https://unsplash.com/photos/NZMeJsrMC8U">Unsplash</a></li>\n
+        </ul>
+    </string>
 </resources>

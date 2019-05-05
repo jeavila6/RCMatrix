@@ -8,6 +8,7 @@
         android:title="@string/connect_item"
         app:showAsAction="always" />
     <item
+        android:id="@+id/about_item"
         android:icon="@drawable/ic_info_outline_white_24dp"
         android:title="@string/about"
         app:showAsAction="ifRoom" />
