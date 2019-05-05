@@ -18,11 +18,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 
-class PhotoFragment extends Fragment {
+class PhotoFragment extends Fragment implements BluetoothFragmentInterface {
 
     // request codes
     private final int REQ_CODE_PICK = 1;
@@ -88,13 +90,26 @@ class PhotoFragment extends Fragment {
         }
     }
 
-    byte[] getMessage() {
+    @Override
+    public byte[] getMessage() {
+        ByteArrayOutputStream tempStream = new ByteArrayOutputStream();
 
-        // get image from image view
+        // message type
+        String messageType = "I";
+        byte[] messageTypeBytes = messageType.getBytes();
+
+        // resized image RGB values
         Bitmap bitmap = ((BitmapDrawable) mPhotoImageView.getDrawable()).getBitmap();
-
-        // resize and return RGB values for pixels
         bitmap = ImageTools.resizeBitmap(bitmap);
-        return ImageTools.bitmapToRgb(bitmap);
+        byte[] imageBytes = ImageTools.bitmapToRgb(bitmap);
+
+        try {
+            tempStream.write(messageTypeBytes);
+            tempStream.write(imageBytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return tempStream.toByteArray();
     }
 }

@@ -2,6 +2,9 @@ package com.example.rcmatrix;
 
 import android.graphics.Bitmap;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 class ImageTools {
 
     /**
@@ -14,28 +17,41 @@ class ImageTools {
     }
 
     /**
-     * Return String of RGB values from Bitmap.
+     * Return byte array of RGB values from Bitmap.
      * @param bitmap source Bitmap
-     * @return RGB String
+     * @return RGB byte array
      */
     static byte[] bitmapToRgb(Bitmap bitmap) {
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
+
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
 
         int[] pixels = new int[width * height];
         bitmap.getPixels(pixels, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
 
-        // RGB values for each pixel, in order
-        byte[] bytes = new byte[width * height * 3];
-
-        int index = 0;
         for (int pixel : pixels) {
-            bytes[index++] = (byte) (pixel >> 16 & 0xff);
-            bytes[index++] = (byte) (pixel >> 8 & 0xff);
-            bytes[index++] = (byte) (pixel & 0xff);
+            try {
+                outputStream.write(colorToRgb(pixel));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-        return bytes;
+        return outputStream.toByteArray();
     }
 
+    /**
+     * Return byte array of RGB values from color.
+     * @param color source color
+     * @return RGB byte array
+     */
+    static byte[] colorToRgb(int color) {
+        byte[] rgb = new byte[3];
+        rgb[0] = (byte) (color >> 16 & 0xff);
+        rgb[1] = (byte) (color >> 8 & 0xff);
+        rgb[2] = (byte) (color & 0xff);
+        return rgb;
+    }
 }

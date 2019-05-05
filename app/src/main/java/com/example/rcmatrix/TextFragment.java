@@ -1,34 +1,41 @@
 package com.example.rcmatrix;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Objects;
 
 import petrov.kristiyan.colorpicker.ColorPicker;
 
-class TextFragment extends Fragment {
+class TextFragment extends Fragment implements BluetoothFragmentInterface {
 
     private ImageButton mColorImageButton;
+    private EditText mInputEditText;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_text, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_text, container, false);
 
-        mColorImageButton = view.findViewById(R.id.color_image_button);
+        mColorImageButton = rootView.findViewById(R.id.color_image_button);
+        mInputEditText = rootView.findViewById(R.id.input_edit_text);
+
+        // show color picker on color image button click
         mColorImageButton.setOnClickListener(v -> showColorPicker());
 
-        // set color picker to default color
+        // set default color for color image button
         mColorImageButton.setBackgroundColor(getResources().getColor(R.color.color_gray_50));
 
-
-        return view;
+        return rootView;
     }
 
     private void showColorPicker() {
@@ -49,10 +56,30 @@ class TextFragment extends Fragment {
                 .show();
     }
 
-    /*
+    @Override
     public byte[] getMessage() {
-        String message = "empty";
-        return message.getBytes();
+        ByteArrayOutputStream tempStream = new ByteArrayOutputStream();
+
+        // message type
+        String messageType = "T";
+        byte[] messageTypeBytes = messageType.getBytes();
+
+        // text color
+        int textColor = ((ColorDrawable)mColorImageButton.getBackground()).getColor();
+        byte[] textColorBytes = ImageTools.colorToRgb(textColor);
+
+        // text
+        String text = mInputEditText.getText().toString();
+        byte[] textBytes = text.getBytes();
+
+        try {
+            tempStream.write(messageTypeBytes);
+            tempStream.write(textColorBytes);
+            tempStream.write(textBytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return tempStream.toByteArray();
     }
-    */
 }

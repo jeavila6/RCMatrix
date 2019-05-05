@@ -156,6 +156,10 @@ public class PaintView extends View {
         return mBgColor;
     }
 
+    public Bitmap getBitmap() {
+        return mBitmap;
+    }
+
     private class DrawPath {
 
         private final int color;

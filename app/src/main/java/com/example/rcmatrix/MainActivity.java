@@ -161,12 +161,19 @@ public class MainActivity extends AppCompatActivity implements ConnectDialogFrag
             return;
         }
 
+        // if current fragment implements BluetoothFragmentInterface, get its message
         Fragment currentFragment = mFragmentManager.findFragmentById(R.id.fragment_frame_layout);
-        assert currentFragment != null;
-        byte[] bytes = ((PhotoFragment) currentFragment).getMessage();
-        mConnectedThread.write("I".getBytes());
-        mConnectedThread.write(bytes);
+        if (!(currentFragment instanceof BluetoothFragmentInterface))
+            return;
+        byte[] bytes = new byte[0];
+        try {
+            bytes = ((BluetoothFragmentInterface) currentFragment).getMessage();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        // write message
+        mConnectedThread.write(bytes);
     }
 
     // constants used when transmitting messages between service and UI

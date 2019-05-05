@@ -1,5 +1,6 @@
 package com.example.rcmatrix;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -14,11 +15,15 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Objects;
 
 import petrov.kristiyan.colorpicker.ColorPicker;
 
-class DrawFragment extends Fragment {
+class DrawFragment extends Fragment implements BluetoothFragmentInterface {
+
+    private PaintView mPaintView;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -26,7 +31,7 @@ class DrawFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_draw, container, false);
 
-        PaintView paintView = view.findViewById(R.id.paint_view);
+        mPaintView = view.findViewById(R.id.paint_view);
         Spinner strokeWidthSpinner = view.findViewById(R.id.stroke_width_spinner);
         Button clearButton = view.findViewById(R.id.clear_button);
         ImageButton fgColorImageButton = view.findViewById(R.id.fg_color_image_button);
@@ -36,7 +41,7 @@ class DrawFragment extends Fragment {
         DisplayMetrics metrics = new DisplayMetrics();
         Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay()
                 .getMetrics(metrics);
-        paintView.initCanvas(metrics.widthPixels, metrics.heightPixels);
+        mPaintView.initCanvas(metrics.widthPixels, metrics.heightPixels);
 
         // set stroke width spinner adapter
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(),
@@ -48,7 +53,7 @@ class DrawFragment extends Fragment {
         strokeWidthSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                paintView.setStrokeWidth(position);
+                mPaintView.setStrokeWidth(position);
             }
 
             @Override
@@ -56,11 +61,11 @@ class DrawFragment extends Fragment {
         });
 
         // clear canvas on clear button click
-        clearButton.setOnClickListener(v -> paintView.clear());
+        clearButton.setOnClickListener(v -> mPaintView.clear());
 
         // set foreground color and and background color pickers to match
-        fgColorImageButton.setBackgroundColor(paintView.getFgColor());
-        bgColorImageButton.setBackgroundColor(paintView.getBgColor());
+        fgColorImageButton.setBackgroundColor(mPaintView.getFgColor());
+        bgColorImageButton.setBackgroundColor(mPaintView.getBgColor());
 
         // set foreground color on color picker selection
         fgColorImageButton.setOnClickListener(v -> {
@@ -69,7 +74,7 @@ class DrawFragment extends Fragment {
                 @Override
                 public void setOnFastChooseColorListener(int position, int color) {
                     fgColorImageButton.setBackgroundColor(color);
-                    paintView.setFgColor(color);
+                    mPaintView.setFgColor(color);
                 }
 
                 @Override
@@ -89,7 +94,7 @@ class DrawFragment extends Fragment {
                 @Override
                 public void setOnFastChooseColorListener(int position, int color) {
                     bgColorImageButton.setBackgroundColor(color);
-                    paintView.setBgColor(color);
+                    mPaintView.setBgColor(color);
                 }
 
                 @Override
@@ -107,5 +112,28 @@ class DrawFragment extends Fragment {
         fgColorImageButton.setBackgroundColor(getResources().getColor(R.color.color_gray_900));
 
         return view;
+    }
+
+    @Override
+    public byte[] getMessage() {
+        ByteArrayOutputStream tempStream = new ByteArrayOutputStream();
+
+        // message type
+        String messageType = "D";
+        byte[] messageTypeBytes = messageType.getBytes();
+
+        // resized drawing RGB values
+        Bitmap bitmap = mPaintView.getBitmap();
+        bitmap = ImageTools.resizeBitmap(bitmap);
+        byte[] imageBytes = ImageTools.bitmapToRgb(bitmap);
+
+        try {
+            tempStream.write(messageTypeBytes);
+            tempStream.write(imageBytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return tempStream.toByteArray();
     }
 }
