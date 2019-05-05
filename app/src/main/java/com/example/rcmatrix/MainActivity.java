@@ -84,6 +84,9 @@ public class MainActivity extends AppCompatActivity implements ConnectDialogFrag
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
+        // allow fragments to handle result first
+        super.onActivityResult(requestCode, resultCode, data);
+
         // show connect dialog if Bluetooth was enabled
         if (requestCode == REQUEST_ENABLE_BT && resultCode == RESULT_OK) {
             ConnectDialogFragment dialog = new ConnectDialogFragment();
