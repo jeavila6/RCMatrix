@@ -49,14 +49,15 @@ class PhotoFragment extends Fragment implements BluetoothFragmentInterface {
             startActivityForResult(pickIntent, REQ_CODE_PICK);
         });
 
-        // for storing image capture
-        mCapturedImageUri = Objects.requireNonNull(getActivity()).getContentResolver()
-                .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
-
         // start ACTION_IMAGE_CAPTURE intent on camera button click
         Button cameraButton = rootView.findViewById(R.id.camera_button);
         cameraButton.setOnClickListener(view -> {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+            // for storing image capture
+            mCapturedImageUri = Objects.requireNonNull(getActivity()).getContentResolver()
+                    .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
+
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageUri);
 
             // check availability of camera
