@@ -99,9 +99,12 @@ class PhotoFragment extends Fragment implements BluetoothFragmentInterface {
         String messageType = "I";
         byte[] messageTypeBytes = messageType.getBytes();
 
-        // resized image RGB values
+        // crop and resize image
         Bitmap bitmap = ((BitmapDrawable) mPhotoImageView.getDrawable()).getBitmap();
+        bitmap = ImageTools.cropSquareBitmap(bitmap);
         bitmap = ImageTools.resizeBitmap(bitmap);
+
+        // get RGB values
         byte[] imageBytes = ImageTools.bitmapToRgb(bitmap);
 
         try {

@@ -8,6 +8,26 @@ import java.io.IOException;
 class ImageTools {
 
     /**
+     * Return center cropped Bitmap from Bitmap.
+     * @param bitmap source Bitmap
+     * @return center cropped Bitmap
+     */
+    static Bitmap cropSquareBitmap(Bitmap bitmap) {
+        int width  = bitmap.getWidth();
+        int height = bitmap.getHeight();
+
+        int newWidth = Math.min(width, height);
+        int newHeight = (height > width) ? height - (height - width) : height;
+
+        int cropWidth = (width - height) / 2;
+        cropWidth = (cropWidth < 0) ? 0: cropWidth;
+        int cropHeight = (height - width) / 2;
+        cropHeight = (cropHeight < 0) ? 0: cropHeight;
+
+        return Bitmap.createBitmap(bitmap, cropWidth, cropHeight, newWidth, newHeight);
+    }
+
+    /**
      * Return resized 64x64 Bitmap from Bitmap.
      * @param bitmap source Bitmap
      * @return resized Bitmap
@@ -29,7 +49,7 @@ class ImageTools {
         int height = bitmap.getHeight();
 
         int[] pixels = new int[width * height];
-        bitmap.getPixels(pixels, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
+        bitmap.getPixels(pixels, 0, width, 0, 0, width, height);
 
         for (int pixel : pixels) {
             try {
@@ -48,10 +68,10 @@ class ImageTools {
      * @return RGB byte array
      */
     static byte[] colorToRgb(int color) {
-        byte[] rgb = new byte[3];
-        rgb[0] = (byte) (color >> 16 & 0xff);
-        rgb[1] = (byte) (color >> 8 & 0xff);
-        rgb[2] = (byte) (color & 0xff);
-        return rgb;
+        return new byte[]{
+                (byte) (color >> 16 & 0xff),
+                (byte) (color >> 8 & 0xff),
+                (byte) (color & 0xff)
+        };
     }
 }
