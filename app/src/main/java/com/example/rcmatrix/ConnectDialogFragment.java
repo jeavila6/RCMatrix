@@ -31,7 +31,7 @@ class ConnectDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        // inflate layout for dialog, passing null as parent view since its used in dialog layout
+        // inflate layout
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         @SuppressLint("InflateParams") View dialogView =
                 inflater.inflate(R.layout.fragment_dialog_connect, null);
@@ -39,8 +39,6 @@ class ConnectDialogFragment extends DialogFragment {
         // get paired devices
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         List<BluetoothDevice> bondedList = new ArrayList<>(bluetoothAdapter.getBondedDevices());
-
-        // TODO show message if no paired devices, bondedList.isEmpty()
 
         // build device radio group
         RadioGroup deviceRadioGroup = dialogView.findViewById(R.id.device_radio_group);
@@ -51,16 +49,17 @@ class ConnectDialogFragment extends DialogFragment {
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.DialogTheme);
-
-        // set constructed layout for dialog
         builder.setView(dialogView);
 
-        // set positive button for dialog, send positive button event back to host activity
+        // set positive button; send positive button event back to host activity
         builder.setPositiveButton(R.string.connect_dialog_positive_button, (dialog, id) -> {
+
+            // get selected device if selection was made
             int checkedRadioButtonId = deviceRadioGroup.getCheckedRadioButtonId();
             View checkedRadioButton = deviceRadioGroup.findViewById(checkedRadioButtonId);
             int checkedRadioButtonIndex = deviceRadioGroup.indexOfChild(checkedRadioButton);
-            BluetoothDevice selectedDevice = bondedList.get(checkedRadioButtonIndex);
+            BluetoothDevice selectedDevice = (checkedRadioButtonIndex >= 0) ?
+                    bondedList.get(checkedRadioButtonIndex) : null;
             mListener.onDialogPositiveClick(selectedDevice);
         });
 
