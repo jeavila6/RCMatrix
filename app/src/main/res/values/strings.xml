@@ -31,9 +31,15 @@
         <item>Bold</item>
     </string-array>
     <string name="about_information">
+        <b>About</b>\n\nRCMatrix makes controlling your LED matrix display via Bluetooth easy. This
+        project is open source; check it out on
+        <a href="https://github.com/jeavila6/LEDMatrix">GitHub</a>.\n\n
+        <b>Credits</b>\n
         <ul>\n
-            <li><b>ColorPicker</b> by <a href="https://github.com/kristiyanP">kristiyanP</a> on <a href="https://github.com/kristiyanP/colorpicker">GitHub</a></li>\n
-            <li><b>Coffee Cup Plate</b> by <a href="https://unsplash.com/@reo">Emre Gencer</a> on <a href="https://unsplash.com/photos/NZMeJsrMC8U">Unsplash</a></li>\n
+            <li>ColorPicker by <a href="https://github.com/kristiyanP">kristiyanP</a> on
+                <a href="https://github.com/kristiyanP/colorpicker">GitHub</a></li>\n
+            <li>Coffee Cup Plate by <a href="https://unsplash.com/@reo">Emre Gencer</a> on
+                <a href="https://unsplash.com/photos/NZMeJsrMC8U">Unsplash</a></li>\n
         </ul>
     </string>
 </resources>
