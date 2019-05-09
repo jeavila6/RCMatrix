@@ -32,18 +32,20 @@ class DrawFragment extends Fragment implements BluetoothFragmentInterface {
         View view = inflater.inflate(R.layout.fragment_draw, container, false);
 
         mPaintView = view.findViewById(R.id.paint_view);
+
         Spinner strokeWidthSpinner = view.findViewById(R.id.stroke_width_spinner);
         Button clearButton = view.findViewById(R.id.clear_button);
         ImageButton fgColorImageButton = view.findViewById(R.id.fg_color_image_button);
         ImageButton bgColorImageButton = view.findViewById(R.id.bg_color_image_button);
 
-        // initialize paint view canvas
+        // initialize paint view canvas; make it square
         DisplayMetrics metrics = new DisplayMetrics();
         Objects.requireNonNull(getActivity()).getWindowManager().getDefaultDisplay()
                 .getMetrics(metrics);
-        mPaintView.initCanvas(metrics.widthPixels, metrics.heightPixels);
+        int sideLength = Math.min(metrics.widthPixels, metrics.heightPixels);
+        mPaintView.initCanvas(sideLength, sideLength);
 
-        // set stroke width spinner adapter
+        // set up stroke width spinner adapter
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(view.getContext(),
                 R.array.stroke_width_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -57,7 +59,7 @@ class DrawFragment extends Fragment implements BluetoothFragmentInterface {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) { }
+            public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
         // clear canvas on clear button click

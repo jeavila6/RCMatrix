@@ -13,6 +13,8 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+// following a fantastic tutorial by @ssaurel:
+// https://www.ssaurel.com/blog/learn-to-create-a-paint-application-for-android/
 public class PaintView extends View {
 
     // default values for stroke properties
@@ -29,14 +31,15 @@ public class PaintView extends View {
     private float mXPosition;
     private float mYPosition;
     private Path mPath;
-    private final Paint mPaint;
     private Bitmap mBitmap;
     private Canvas mCanvas;
+    private final Paint mPaint;
     private final Paint mBitmapPaint = new Paint(Paint.DITHER_FLAG);
 
     public PaintView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        // set up style
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
@@ -47,16 +50,19 @@ public class PaintView extends View {
         mPaint.setXfermode(null);
         mPaint.setAlpha(0xff);
 
+        // use defaults
         mFgColor = DEFAULT_FG_COLOR;
         mBgColor = DEFAULT_BG_COLOR;
         mStrokeWidth = DEFAULT_STROKE_WIDTH;
     }
 
+    // initialize canvas using bitmap
     public void initCanvas(int width, int height) {
         mBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         mCanvas = new Canvas(mBitmap);
     }
 
+    // clear all paths
     public void clear() {
         mDrawPaths.clear();
         invalidate();
