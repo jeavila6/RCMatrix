@@ -1,7 +1,7 @@
 package com.example.rcmatrix;
 
-import java.io.IOException;
+interface BluetoothFragmentInterface {
 
-public interface BluetoothFragmentInterface {
-    byte[] getMessage() throws IOException;
+    // return a byte array message to send to remote device
+    byte[] getMessage();
 }

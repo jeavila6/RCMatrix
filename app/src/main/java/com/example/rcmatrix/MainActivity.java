@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements ConnectDialogFrag
     @Override
     public void onDialogPositiveClick(BluetoothDevice device) {
 
+        // show toast if no device was selected
         if (device == null) {
             Toast.makeText(this, R.string.no_device_selected, Toast.LENGTH_SHORT).show();
             return;
@@ -157,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements ConnectDialogFrag
     // send data to connected device
     private void sendDataBluetooth() {
 
-        // display error if connected thread hasn't started
+        // show toast if connected thread hasn't started
         if (mConnectedThread == null) {
             String toastText = getResources().getString(R.string.no_connection);
             Toast.makeText(MainActivity.this, toastText, Toast.LENGTH_SHORT).show();
@@ -168,12 +169,7 @@ public class MainActivity extends AppCompatActivity implements ConnectDialogFrag
         Fragment currentFragment = mFragmentManager.findFragmentById(R.id.fragment_frame_layout);
         if (!(currentFragment instanceof BluetoothFragmentInterface))
             return;
-        byte[] bytes = new byte[0];
-        try {
-            bytes = ((BluetoothFragmentInterface) currentFragment).getMessage();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        byte[] bytes = ((BluetoothFragmentInterface) currentFragment).getMessage();
 
         // write message
         mConnectedThread.write(bytes);
